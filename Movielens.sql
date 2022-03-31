@@ -15,7 +15,7 @@ group by movies.id
 order by SUM(ratings.rating)/COUNT(ratings.movie_id)  asc;
 -- List the unique records for Sci-Fi movies where male 24-year-old students have given 5-star ratings.
 
-SELECT users.id, genres.name, users.age, users.gender, ratings.rating
+SELECT users.id, genres.name, users.age, users.gender, ratings.rating, movies.title
 FROM genres_movies
 JOIN movies ON genres_movies.movie_id = movies.id
 JOIN genres ON genres_movies.genre_id = genres.id
@@ -24,15 +24,16 @@ JOIN users ON ratings.user_id = users.id
 WHERE ratings.rating = 5 AND
 users.gender = 'M'
 AND genres.name = 'Sci-Fi'
-AND users.age = 24;
+AND users.age = 24
+;
 
 -- List the unique titles of each of the movies released on the most popular release day.
-SELECT Title, release_date, count(release_date)
-FROM movies
-group by title
-order by COUNT(release_date) desc ;
+SELECT title, release_date 
+from movies
+WHERE release_date = (SELECT release_date FROM movies
+GROUP BY release_date ORDER BY COUNT(id) DESC LIMIT 1);
 
-WHERE release_date  ;
+
 -- Find the total number of movies in each genre; list the results in ascending numeric order.
 
 SELECT genres.name, count(movies.title) AS NumberofMovies

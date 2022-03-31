@@ -110,7 +110,7 @@ group by governmentform
 order by COUNT(Governmentform) desc
 limit 3;
 -- How many countries have gained independence since records began?
-SELECT   count(indepyear)
+SELECT count(indepyear)
 FROM country
 WHERE indepyear IS NOT NULL
 ;
